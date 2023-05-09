@@ -1,4 +1,3 @@
-Studente: Spizzuoco Lorenzo 879177
 
 La libreria implementata costruisce delle strutture dati
 che rappresentano oggetti JSON a partire dalla loro rappresentazione
