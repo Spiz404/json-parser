@@ -1,7 +1,5 @@
 ;;;; -*- Mode : Lisp -*-
 
-;;;; Lorenzo Spizzuoco 879177
-
 ;;;; jsonparse.lisp
 
 ;; string parser
@@ -21,7 +19,7 @@
 
 ;; funzione parse-string-content
 
-;; una stringa è composta da
+;; una stringa Ã¨ composta da
 ;; '"' characters '"'
 ;; la funzione ritorna la stringa parsata
 ;; e tutti i caratteri presenti dopo la chiusura della stringa
@@ -43,8 +41,8 @@
 	 (append stringa (first carattere))))))
 
 ;; funzione parse-character
-;; un carattere è valido se è un carattere
-;; di escape valido oppure se è compreso tra
+;; un carattere Ã¨ valido se Ã¨ un carattere
+;; di escape valido oppure se Ã¨ compreso tra
 ;; 0020 e 10FFFF 
 
 (defun parse-character (jsonlist)
@@ -64,7 +62,7 @@
 
 (defparameter e-chars (list #\/ #\" #\\ #\b #\r #\t #\n #\f))
 
-;; funzione che controlla se il carattere di escape trovato è valido
+;; funzione che controlla se il carattere di escape trovato Ã¨ valido
 (defun escape-char (carattere)
   (if (find carattere e-chars)
       carattere
@@ -77,12 +75,12 @@
 
 					; descrizione:
 ;; funzione che parsa un oggetto, ritorna una lista in cui
-;; il primo elemento è la struttura dell'oggetto parsato
+;; il primo elemento Ã¨ la struttura dell'oggetto parsato
 ;; mentre il secondo elemento
-;; è una lista con tutti i caratteri restanti
+;; Ã¨ una lista con tutti i caratteri restanti
 ;; in jsonlist dopo l'oggetto parsato.
 ;; Se il primo carattere (dopo eventuali whitespace) dopo il parsing dei member
-;; non è } allora viene generato un errore.
+;; non Ã¨ } allora viene generato un errore.
 
 
 (defun parse-object (jsonlist)
@@ -114,12 +112,12 @@
 ;; members = pair*
 ;; questa funzione ritorna una lista composta nel seguente modo
 ;; (members rest)
-;; dove members è una lista contenente tutte le pair parsate
-;; e rest è una lista contenente tutti i caratteri
+;; dove members Ã¨ una lista contenente tutte le pair parsate
+;; e rest Ã¨ una lista contenente tutti i caratteri
 ;; presenti dopo i member parsati
 ;; casi di errore:
 ;; non posso avere la lista in input vuota
-;; il caso di oggetto vuoto è gestito da parse-object
+;; il caso di oggetto vuoto Ã¨ gestito da parse-object
 
 (defun  parse-member (jsonlist members)
   (let* 
@@ -149,23 +147,23 @@
 ;; (pair rest)
 ;; dove 
 ;; pair = '(' attribute value ')'
-;; rest è una lista contenente tutti i caratteri dopo il pair parsato
-;; caso di errore: se l'attribute del pair è la stringa vuota oppure
-;; il primo carattere dopo l'attribute non è : 
+;; rest Ã¨ una lista contenente tutti i caratteri dopo il pair parsato
+;; caso di errore: se l'attribute del pair Ã¨ la stringa vuota oppure
+;; il primo carattere dopo l'attribute non Ã¨ : 
 
 (defun parse-pair (jsonlist)
   (let*
       ((no-ws-jlist (parse-whitespace jsonlist))
        ;; chiamo il parser stringa per prendere l'attribute del pair
        (parsed-string (parse-string no-ws-jlist))
-       ;; lista contenente tutto ciò che c'è dopo il pair attribute
+       ;; lista contenente tutto ciÃ² che c'Ã¨ dopo il pair attribute
        ;; senza whitespace iniziali
        (resto-nows (parse-whitespace (second parsed-string)))
-       ;; controllo che dopo l'attribute del pair c'è :
+       ;; controllo che dopo l'attribute del pair c'Ã¨ :
        (pair-delimiter (eql  #\: (first resto-nows)))
        ;; attribute del pair
        (pair-attribute (first parsed-string))
-       ;; se è presente sia l'attribute del pair che il : 
+       ;; se Ã¨ presente sia l'attribute del pair che il : 
        ;; allora effettuo il parsing del value del pair
        (pair-value 
         (if (and pair-delimiter pair-attribute) 
@@ -188,11 +186,11 @@
 ;; parsa il value di un pair oppure di un elemento di un array
 ;; la funzione controlla il primo carattere dopo eventuali whitespace
 ;; e in base a questo chiama la funzione di parsing corretta
-;; il valore di ritorno della funzione è sempre una lista siffatta:
+;; il valore di ritorno della funzione Ã¨ sempre una lista siffatta:
 ;; (value rest)
-;; value può essere una lista (nel caso di un oggetto o un array)
+;; value puÃ² essere una lista (nel caso di un oggetto o un array)
 ;; oppure un atomo (caso stringa, numero, true, false, null).
-;; rest è la lista contenente tutti i caratteri presenti dopo il 
+;; rest Ã¨ la lista contenente tutti i caratteri presenti dopo il 
 ;; value parsato
 
 (defun parse-value (jsonlist) 
@@ -234,10 +232,10 @@
 ;; la funzione ritorna una lista siffatta:
 ;; (array rest)
 ;; dove array = '(' jsonarray elements ')'
-;; rest è una lista contenente tutti i caratteri dopo l'array parsato
+;; rest Ã¨ una lista contenente tutti i caratteri dopo l'array parsato
 
 ;; caso di errore:
-;; se il primo carattere presente dopo gli elementi dell'array non è ]
+;; se il primo carattere presente dopo gli elementi dell'array non Ã¨ ]
 ;; allora la funzione segnala un errore
 
 (defun parse-array (jsonlist)
@@ -257,7 +255,7 @@
 ;; data la lista in input, effettua il parsing degli elementi di un array
 ;; casi di errore:
 ;; non posso avere la lista vuota come input
-;; il caso array vuoto è gestito da parse-array
+;; il caso array vuoto Ã¨ gestito da parse-array
 
 (defun parse-element (jsonlist elements)
 
@@ -378,7 +376,7 @@
 ;; descrizione:
 ;; la funzione ritorna una lista siffata:
 ;; (numero rest)
-;; dove numero è il numero parsato da jsonlist e rest
+;; dove numero Ã¨ il numero parsato da jsonlist e rest
 ;; sono tutti i caratteri presenti
 ;; dopo il numero parsato
 
@@ -393,7 +391,7 @@
 ;; funzione check-sign
 ;; descrizione:
 ;; controlla se il primo carattere della lista
-;; da cui parsare il numero è il segno meno
+;; da cui parsare il numero Ã¨ il segno meno
 
 (defun check-sign (jsonlist)
   (if (eql #\- (first jsonlist))
@@ -419,7 +417,7 @@
       (rest jsonlist) 
       (append numero (list (first jsonlist)))))
 
-    ;; se il carattere che sto leggendo è uguale al punto
+    ;; se il carattere che sto leggendo Ã¨ uguale al punto
     ;;allora chiamo il parser della parte decimale
     ((eql #\. (first jsonlist)) 
      ;; se trovo il punto controllo che la parte decimale ritornata non sia
@@ -499,11 +497,11 @@
       (rest jsonlist) 
       (append numero (list (first jsonlist)))))
     
-    ;; caso base: il carattere trovato non è un digit
+    ;; caso base: il carattere trovato non Ã¨ un digit
     (t (list numero jsonlist))))
 
 
-;; funzione di appoggio che controlla se un carattere è il segno
+;; funzione di appoggio che controlla se un carattere Ã¨ il segno
 ;; meno oppure un digit
 
 (defun is-number (c) 
@@ -613,13 +611,13 @@
 
 (defun value-dump (stream value &optional tabs)
   (cond
-    ;; controllo se è una stringa o un numero
+    ;; controllo se Ã¨ una stringa o un numero
     ((typep value 'string) (string-dump stream value))
     ((typep value 'number) (format stream "~A" (write-to-string value)))
     ((equal value 'true) (format stream "true"))
     ((equal value 'false) (format stream "false"))
     ((equal value 'null) (format stream "null"))
-    ;; controllo se il value è un oggetto o un array
+    ;; controllo se il value Ã¨ un oggetto o un array
     ((equal (first value) 'jsonobj)
      (object-dump stream (rest value) tabs))
     
