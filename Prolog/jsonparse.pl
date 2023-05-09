@@ -1,7 +1,5 @@
 %%%% -*- Mode: Prolog -*-
 
-%%%% Lorenzo Spizzuoco 879177
-
 %%%% jsonparse.pl
 
 % OBJECT PARSER
@@ -25,7 +23,7 @@ jsonobj([C | ObjectStringList], jsonobj(Members), Rest) :-
 
 % parse_members/3
 
-% predicato vero se è possibile costruire una lista di members
+% predicato vero se Ã¨ possibile costruire una lista di members
 % da memberStringList
 
 % caso [ Members ] lista vuota
@@ -35,7 +33,7 @@ parse_members(MemberStringList, [], [Delimiter | Rest]) :-
     Delimiter = '}',
     !.
 
-% caso in cui sono presenti più pair
+% caso in cui sono presenti piÃ¹ pair
 
 parse_members(MemberStringList, [W | OtherMembers], R) :-
     parse_whitespace(MemberStringList, [Delimiter | Rest]),
@@ -53,7 +51,7 @@ parse_members(MemberStringList, [W | OtherMembers], R) :-
     !,
     parse_members(Mns, OtherMembers, R).
 
-% caso in cui è presente un solo pair
+% caso in cui Ã¨ presente un solo pair
 
 parse_members(MemberStringList, [W], Remaning) :-
     parse_whitespace(MemberStringList, [Delimiter | Rest]),
@@ -66,7 +64,7 @@ parse_members(MemberStringList, _, _) :-
     parse_whitespace(MemberStringList, _),
     fail.
 
-% caso in cui sono presenti più pair
+% caso in cui sono presenti piÃ¹ pair
 
 parse_pair(Rest, (String, Value), MemberRest) :-
 
@@ -94,7 +92,7 @@ parse_value(['"' | ValueRest], Value, MemberRest) :-
     !,
     parse_string(ValueRest, Value, MemberRest).
 
-% value è un numero
+% value Ã¨ un numero
 
 % caso numero negativo
 
@@ -111,7 +109,7 @@ parse_value([Delimiter | ValueRest], Value, MemberRest) :-
     !,
     parse_number([Delimiter | ValueRest], Value, MemberRest).
 
-% caso value è un oggetto
+% caso value Ã¨ un oggetto
 
 parse_value([Delimiter | ValueRest], Value, MemberRest) :-
 
@@ -119,7 +117,7 @@ parse_value([Delimiter | ValueRest], Value, MemberRest) :-
     !,
     jsonobj([Delimiter | ValueRest], Value, MemberRest).
 
-% caso value è un array
+% caso value Ã¨ un array
 
 parse_value([Delimiter | ValueRest], Value, MemberRest) :-
 
@@ -127,7 +125,7 @@ parse_value([Delimiter | ValueRest], Value, MemberRest) :-
     !,
     jsonarray([Delimiter | ValueRest], Value, MemberRest).
 
-% casi value è true, false, null
+% casi value Ã¨ true, false, null
 
 parse_value(['t', 'r', 'u', 'e' | MemberRest], true, MemberRest) :- !.
 
@@ -318,7 +316,7 @@ parse_number([C | Chars], N, Resto) :-
 parse_number(Chars, N, Resto) :-
     parse_number_unsigned(Chars, N, Resto).
 
-% caso in cui è presente la parte decimale ed esponente
+% caso in cui Ã¨ presente la parte decimale ed esponente
 % caso esponente con segno positivo
 
 parse_number_unsigned(Chars, N, Resto) :-
@@ -368,7 +366,7 @@ parse_number_unsigned(Chars, N, Resto) :-
     append(P, ['e' | ExpList], Tot),
     number_string(N, Tot).
 
-% caso in cui è presente la parte decimale e non esponente
+% caso in cui Ã¨ presente la parte decimale e non esponente
 
 parse_number_unsigned(Chars, N, Resto) :-
 
@@ -379,7 +377,7 @@ parse_number_unsigned(Chars, N, Resto) :-
     append(IntegerPart, ['.' | Decimal], Tot),
     number_string(N, Tot).
 
-% caso in cui non è presente la parte decimale ed è presente l'exp
+% caso in cui non Ã¨ presente la parte decimale ed Ã¨ presente l'exp
 % caso esponente con segno positivo
 
 parse_number_unsigned(Chars, N, Resto) :-
@@ -420,7 +418,7 @@ parse_number_unsigned(Chars, N, Resto) :-
     append(IntegerPart, ['e' | ExpList], Tot),
     number_string(N, Tot).
 
-% caso in cui è presente solo la parte intera
+% caso in cui Ã¨ presente solo la parte intera
 
 parse_number_unsigned(Chars, N, Resto) :-
     parse_integer(Chars, IntegerPart, Resto),
@@ -449,8 +447,8 @@ parse_integer([], DsR, Digits, []) :-
 % WHITESPACE PARSING
 
 % parse_whitespace/2
-% il predicato è vero se il secondo argomento
-% è la lista nel primo argomento senza
+% il predicato Ã¨ vero se il secondo argomento
+% Ã¨ la lista nel primo argomento senza
 % whitespace all'inizio
 
 parse_whitespace([C | Chars], Delimiter) :-
