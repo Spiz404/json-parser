@@ -1,10 +1,9 @@
-Studente: Spizzuoco Lorenzo 879177
 
 La libreria implementata costruisce delle strutture dati
 che rappresentano oggetti JSON a partire dalla loro rappresentazione
 come stringhe.
 
-Un oggetto json può essere:
+Un oggetto json puÃ² essere:
 1. object
 2. array
 3. value
@@ -17,7 +16,7 @@ Un object a sua volta si scompone  in:
 '{' ws '}'
 '{' members '}'
 
-dove members è così composto:
+dove members Ã¨ cosÃ¬ composto:
 
 member | member ',' members
 
@@ -29,7 +28,7 @@ dove ws sta per whitespace mentre element:
 
 ws value ws
 
-Value può essere:
+Value puÃ² essere:
 
 1. object
 2. array
@@ -58,14 +57,14 @@ Principali funzioni della libreria:
 1. jsonparse
 
 La funzione jsonparse accetta in input una stringa e cerca di costruire
-una struttura dati che può essere:
+una struttura dati che puÃ² essere:
 1. un oggetto
 2. un array
 3. una stringa
 4. un oggetto
 5. true, false, null
 
-La sintassi degli oggetti JSON in Common Lisè è la seguente:
+La sintassi degli oggetti JSON in Common LisÃ¨ Ã¨ la seguente:
 
 Object = '(' jsonobj members ')'
 Object = '(' jsonarray elements ')'
@@ -90,9 +89,9 @@ jsonparse richiama la funzione jsonparsec passandole una lista costruita tramite
 
 (coerce stringa 'list)
 
-dove stringa è l'input della funzione jsonparse.
+dove stringa Ã¨ l'input della funzione jsonparse.
 
-Il parsing di tipi diversi è gestito da funzioni differenti, infatti jsonparsec, in base al
+Il parsing di tipi diversi Ã¨ gestito da funzioni differenti, infatti jsonparsec, in base al
 primo carattere della lista in input (dopo eventuali whitespace) chiama:
 
 1. parse-object per il parsing di un oggetto;
@@ -103,7 +102,7 @@ primo carattere della lista in input (dopo eventuali whitespace) chiama:
 
 Ogni funzione ritorna una lista del tipo:
 (elemento_parsato resto)
-dove resto è una lista contenente tutti i caratteri dopo l'elemento parsato.
+dove resto Ã¨ una lista contenente tutti i caratteri dopo l'elemento parsato.
 
 Per il parsing dei tipi composti jsonobj e jsonarray, le funzioni parse-object e parse-array
 seguono la scomposizione ricorsiva di un oggetto o array json,
@@ -128,7 +127,7 @@ di fields. La funzione ritorna il value rintracciabile seguendo la catena di fie
 Nel caso in fields sia presente un numero intero N >= 0, allora esso corrisponde all'indice
 di un array.
 
-Il numero variabile di fields è gestito tramite l'indicatore &rest.
+Il numero variabile di fields Ã¨ gestito tramite l'indicatore &rest.
 
 Esempio di funzionamento:
 
@@ -141,14 +140,14 @@ CL-prompt> (jsonaccess (jsonparse
 
 3. jsonread
 
-La funzione jsonread apre un file il cui filename è passato come input e costruire un oggetto json
+La funzione jsonread apre un file il cui filename Ã¨ passato come input e costruire un oggetto json
 in common lisp a partire dal contenuto di filename.
 La funzione legge l'intero contenuto del file come una stringa e richiama la funzione jsonparse.
 
 4. jsondump
 
 La funzione jsondump prende in input un oggetto json costruito da jsonparse e un filename.
-Lo scopo della funzione è di scrivere in filename l'oggetto json passato in input in sintassi
+Lo scopo della funzione Ã¨ di scrivere in filename l'oggetto json passato in input in sintassi
 json (viene effettuata tabulazione).
 
 Nel caso filename non eista allora il file viene creato, se invece esiste, viene sovrascritto.
